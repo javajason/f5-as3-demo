@@ -1,0 +1,874 @@
+{
+	"info": {
+		"_postman_id": "616f1314-83b9-4d47-afed-b1592bed261c",
+		"name": "AS3 Demo1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sample-Nat",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"App1\": {\n            \"class\": \"Application\",\n            \"service\": {\n                \"class\": \"Service_HTTP\",\n                \"virtualAddresses\": [\n                    \"192.168.1.200\"\n                ],\n                \"pool\": \"web_pool\",\n                \"nat64Enabled\": false\n            },\n            \"web_pool\": {\n                \"class\": \"Pool\",\n                \"monitors\": [\n                    \"http\"\n                ],\n                \"members\": [\n                    {\n                        \"servicePort\": 80,\n                        \"serverAddresses\": [\n                            \"192.0.1.10\",\n                            \"192.0.1.11\"\n                        ]\n                    }\n                ]\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sample-Nat-Patch-Addr",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"op\": \"add\",\n        \"path\": \"/{{AS3Tenant}}/App1/web_pool/members/0/serverAddresses/2\",\n        \"value\": \"192.0.1.21\"\n    }\n]"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sample-Nat-Patch-ChangePort",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[ {\n    \"op\": \"replace\",\n    \"path\": \"/{{AS3Tenant}}/App1/web_pool/members/0/servicePort\",\n    \"value\": 8081\n} ]"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sample-Nat - from remote",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"myGitRepo = pm.environment.get(\"myGitRepo\");",
+							"console.log(\"Request to \" + myGitRepo + \"/Sample-VS\");",
+							"",
+							"pm.sendRequest(myGitRepo + \"/Sample-VS\", (error, response) => {",
+							"  if (error) {",
+							"    console.log(error);",
+							"  } else {",
+							"    console.log(response);",
+							"    // myResp = response.text();",
+							"",
+							"    pm.variables.set(\"POST-Payload\", response.text());",
+							"    console.log(\"POST payload is: \" + pm.variables.get(\"POST-Payload\"));",
+							"  }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{POST-Payload}}\n"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "example-nat64 Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant64}}\": {\n        \"class\": \"Tenant\",\n        \"App1\": {\n            \"class\": \"Application\",\n            \"service\": {\n                \"class\": \"Service_HTTP\",\n                \"virtualAddresses\": [\n                    \"9161:7904:7539:6023:5c73:2b27:50c6:46ce\"\n                ],\n                \"pool\": \"web_pool\",\n                \"nat64Enabled\": true\n            },\n            \"web_pool\": {\n                \"class\": \"Pool\",\n                \"monitors\": [\n                    \"http\"\n                ],\n                \"members\": [\n                    {\n                        \"servicePort\": 80,\n                        \"serverAddresses\": [\n                            \"192.0.1.10\",\n                            \"192.0.1.11\"\n                        ]\n                    }\n                ]\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				},
+				"description": "example-nat64"
+			},
+			"response": []
+		},
+		{
+			"name": "Sample-VS - from remote",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"myGitRepo = pm.environment.get(\"myGitRepo\");",
+							"console.log(\"Request to \" + myGitRepo + \"/Sample-VS\");",
+							"",
+							"pm.sendRequest(myGitRepo + \"/Sample-VS\", (error, response) => {",
+							"  if (error) {",
+							"    console.log(error);",
+							"  } else {",
+							"    console.log(response);",
+							"    // myResp = response.text();",
+							"",
+							"    pm.variables.set(\"POST-Payload\", response.text());",
+							"    console.log(\"POST payload is: \" + pm.variables.get(\"POST-Payload\"));",
+							"  }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{POST-Payload}}\n"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sample-VS w/iRule",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"App1\": {\n            \"class\": \"Application\",\n            \"vservice1\": {\n                \"class\": \"Service_HTTP\",\n                \"virtualAddresses\": [\n                    \"192.168.1.200\"\n                ],\n                \"pool\": \"web_pool\",\n                \"nat64Enabled\": false,\n                \"iRules\": [\n                    { \"bigip\": \"/example_NAT/App1/iRule1\" }\n                ]\n            },\n            \"web_pool\": {\n                \"class\": \"Pool\",\n                \"monitors\": [\n                    \"http\"\n                ],\n                \"members\": [\n                    {\n                        \"servicePort\": 80,\n                        \"serverAddresses\": [\n                            \"192.168.0.18\"\n                        ]\n                    }\n                ]\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "X - Sample-VS w/iRule - from remote",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"myGitRepo = pm.environment.get(\"myGitRepo\");",
+							"console.log(\"Request to \" + myGitRepo + \"/Sample-VS-with\");",
+							"",
+							"pm.sendRequest(myGitRepo + \"/Sample-VS\", (error, response) => {",
+							"  if (error) {",
+							"    console.log(error);",
+							"  } else {",
+							"    console.log(response);",
+							"    // myResp = response.text();",
+							"",
+							"    pm.variables.set(\"POST-Payload\", response.text());",
+							"    console.log(\"POST payload is: \" + pm.variables.get(\"POST-Payload\"));",
+							"  }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{POST-Payload}}\n"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get VSs - by URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Get base65 value and decode it",
+							"",
+							"if (pm.response.status == \"OK\" || pm.response.status == 200) {",
+							"    console.log(\"OK status: \" + pm.response.status);",
+							"",
+							"    var obj = JSON.parse(pm.response.text(), function (key, value) {",
+							"    if (key == \"base64\") {",
+							"        decodedValue = atob(value);",
+							"        /*",
+							"        pm.variables.set(pm.response.text(), pm.response.text().replace(value, decodedValue));",
+							"        // pm.response.text().replace(value, decodedValue);",
+							"        */",
+							"        console.log(\"Decoded iRule: : \" + decodedValue);",
+							"        // console.log(\"Full reply: \" + pm.response.text());",
+							"",
+							"        return decodedValue;",
+							"    } else {",
+							"        return value;",
+							"    }",
+							"    })",
+							"} else { console.log(\"Return status: \" + pm.response.status); }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{host}}/mgmt/tm/ltm/virtual",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"virtual"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "X - Create Node - /declare",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"App1\": {\n            \"class\": \"Application\",\n            \"service\": {\n                \"class\": \"Service_HTTP\",\n                \"virtualAddresses\": [\n                    \"192.168.1.200\"\n                ],\n                \"pool\": \"web_pool\",\n                \"nat64Enabled\": false\n            },\n            \"web_pool\": {\n                \"class\": \"Pool\",\n                \"monitors\": [\n                    \"http\"\n                ],\n                \"members\": [\n                    {\n                        \"servicePort\": 80,\n                        \"serverAddresses\": [\n                            \"192.0.1.10\",\n                            \"192.0.1.11\"\n                        ]\n                    }\n                ]\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "X - Create Node - /node",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"App1\": {\n            \"class\": \"Application\",\n            \"service\": {\n                \"class\": \"Service_HTTP\",\n                \"virtualAddresses\": [\n                    \"192.168.1.200\"\n                ],\n                \"pool\": \"web_pool\",\n                \"nat64Enabled\": false\n            },\n            \"web_pool\": {\n                \"class\": \"Pool\",\n                \"monitors\": [\n                    \"http\"\n                ],\n                \"members\": [\n                    {\n                        \"servicePort\": 80,\n                        \"serverAddresses\": [\n                            \"192.0.1.10\",\n                            \"192.0.1.11\"\n                        ]\n                    }\n                ]\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Policy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"Application\": {\n            \"class\": \"Application\",       \n            \"Pol1\": {\n                \"class\": \"Endpoint_Policy\",\n                \"rules\": [\n                    {\n                        \"name\": \"AS3_rule1\",\n                        \"conditions\": [\n                            {\n                                \"type\": \"httpUri\",\n                                \"event\": \"request\",\n                                \"path\": {\n                                    \"operand\": \"contains\",\n                                    \"values\": [\n                                        \"f5as3\"\n                                    ]\n                                },\n                                \"normalized\": true\n                            }\n                        ],\n                        \"actions\": [\n                            {\n                                \"type\": \"drop\",\n                                \"event\": \"request\"\n                            }\n                        ]\n                    }\n                ]\n            }\n        }\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				},
+				"description": "See https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/refguide/schemaref/Endpoint_Policy.schema.json.html?highlight=policy"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Policy - from Remote",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"myGitRepo = pm.environment.get(\"myGitRepo\");",
+							"console.log(\"Request to \" + myGitRepo + \"/Sample-LTM-Policy\");",
+							"",
+							"pm.sendRequest(myGitRepo + \"/Sample-LTM-Policy\", (error, response) => {",
+							"  if (error) {",
+							"    console.log(error);",
+							"  } else {",
+							"    console.log(response);",
+							"    // myResp = response.text();",
+							"",
+							"    pm.variables.set(\"POST-Payload\", response.text());",
+							"    console.log(\"POST payload is: \" + pm.variables.get(\"POST-Payload\"));",
+							"  }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"Application\": {\n            \"class\": \"Application\",       \n            {{POST-Payload}}\n        }\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				},
+				"description": "See https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/refguide/schemaref/Endpoint_Policy.schema.json.html?highlight=policy"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Policies - by filter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare/{{AS3Tenant}}?filterClass=Endpoint_Policy",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare",
+						"{{AS3Tenant}}"
+					],
+					"query": [
+						{
+							"key": "filterClass",
+							"value": "Endpoint_Policy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Policies - by URL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{host}}/mgmt/tm/ltm/policy",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"policy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create iRule",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"Application\": {\n            \"class\": \"Application\", \n            \"iRule1\": {\n                \"class\": \"iRule\",\n                \"label\": \"iRule1\",\n                \"remark\": \"This is a test iRule\",\n                \"iRule\": \"when HTTP_REQUEST { log local0. \\\"Hello\\\" }\"\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create iRule - from Remote - base64",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"myGitRepo = pm.environment.get(\"myGitRepo\");",
+							"console.log(\"Request to \" + myGitRepo + \"/Sample-iRule\");",
+							"",
+							"pm.sendRequest(myGitRepo + \"/Sample-iRule\", (error, response) => {",
+							"  if (error) {",
+							"    console.log(error);",
+							"  } else {",
+							"    console.log(response);",
+							"",
+							"    // Added the replace function to remove all newlines",
+							"    // This works.",
+							"    // pm.variables.set(\"POST-Payload\", response.text().replace( /[\\r\\n]+/gm, \"\" ));",
+							"",
+							"    // Added the btoa() function to base64 encode string (so newlines will be accepted)",
+							"    // This does not work.",
+							"    pm.variables.set(\"POST-Payload\", btoa(response.text()));",
+							"",
+							"    // pm.variables.set(\"POST-Payload\", response.text());",
+							"    console.log(\"POST payload is: \" + pm.variables.get(\"POST-Payload\"));",
+							"  }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"App1\": {\n            \"class\": \"Application\", \n            \"iRule3-base64\": {\n                \"class\": \"iRule\",\n                \"label\": \"iRule3-remote-label\",\n                \"remark\": \"This is a test iRule pulled from GitHub\",\n                \"iRule\": {\n                    \"base64\": \"{{POST-Payload}}\"\n                }\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create iRule - from URL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"Application\": {\n            \"class\": \"Application\", \n            \"iRule2\": {\n                \"class\": \"iRule\",\n                \"label\": \"iRule2-url\",\n                \"remark\": \"This is a test iRule\",\n                \"iRule\": {\n                    \"url\": \"https://raw.githubusercontent.com/javajason/f5-as3/main/Sample-iRule\"\n                }\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create iRule - experiment with newlines",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"Application\": {\n            \"class\": \"Application\", \n            \"iRule1\": {\n                \"class\": \"iRule\",\n                \"label\": \"iRule1\",\n                \"remark\": \"This is a test iRule\",\n                \"iRule\":\n                    \"when HTTP_REQUEST { \\n\\\\\n                      log local0. \\\"Hello\\\" }\"\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get iRules - by filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Get base65 value and decode it",
+							"",
+							"if (pm.response.status == \"OK\" || pm.response.status == 200) {",
+							"    console.log(\"OK status: \" + pm.response.status);",
+							"",
+							"    var obj = JSON.parse(pm.response.text(), function (key, value) {",
+							"    if (key == \"base64\") {",
+							"        decodedValue = atob(value);",
+							"        /*",
+							"        pm.variables.set(pm.response.text(), pm.response.text().replace(value, decodedValue));",
+							"        // pm.response.text().replace(value, decodedValue);",
+							"        */",
+							"        console.log(\"Decoded iRule: : \" + decodedValue);",
+							"        // console.log(\"Full reply: \" + pm.response.text());",
+							"",
+							"        return decodedValue;",
+							"    } else {",
+							"        return value;",
+							"    }",
+							"    })",
+							"} else { console.log(\"Return status: \" + pm.response.status); }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare/{{AS3Tenant}}?filterClass=iRule",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare",
+						"{{AS3Tenant}}"
+					],
+					"query": [
+						{
+							"key": "filterClass",
+							"value": "iRule"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get iRules - by URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Get base65 value and decode it",
+							"",
+							"if (pm.response.status == \"OK\" || pm.response.status == 200) {",
+							"    console.log(\"OK status: \" + pm.response.status);",
+							"",
+							"    var obj = JSON.parse(pm.response.text(), function (key, value) {",
+							"    if (key == \"base64\") {",
+							"        decodedValue = atob(value);",
+							"        /*",
+							"        pm.variables.set(pm.response.text(), pm.response.text().replace(value, decodedValue));",
+							"        // pm.response.text().replace(value, decodedValue);",
+							"        */",
+							"        console.log(\"Decoded iRule: : \" + decodedValue);",
+							"        // console.log(\"Full reply: \" + pm.response.text());",
+							"",
+							"        return decodedValue;",
+							"    } else {",
+							"        return value;",
+							"    }",
+							"    })",
+							"} else { console.log(\"Return status: \" + pm.response.status); }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{host}}/mgmt/tm/ltm/rule",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"rule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pools - by URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Get base65 value and decode it",
+							"",
+							"if (pm.response.status == \"OK\" || pm.response.status == 200) {",
+							"    console.log(\"OK status: \" + pm.response.status);",
+							"",
+							"    var obj = JSON.parse(pm.response.text(), function (key, value) {",
+							"    if (key == \"base64\") {",
+							"        decodedValue = atob(value);",
+							"        /*",
+							"        pm.variables.set(pm.response.text(), pm.response.text().replace(value, decodedValue));",
+							"        // pm.response.text().replace(value, decodedValue);",
+							"        */",
+							"        console.log(\"Decoded iRule: : \" + decodedValue);",
+							"        // console.log(\"Full reply: \" + pm.response.text());",
+							"",
+							"        return decodedValue;",
+							"    } else {",
+							"        return value;",
+							"    }",
+							"    })",
+							"} else { console.log(\"Return status: \" + pm.response.status); }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{host}}/mgmt/tm/ltm/pool",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"pool"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{pass}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{user}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "POST_Payload",
+			"value": ""
+		},
+		{
+			"key": "Sample-Nat-Request",
+			"value": ""
+		},
+		{
+			"key": "myResp",
+			"value": ""
+		}
+	]
+}
