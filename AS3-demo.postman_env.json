@@ -1,0 +1,45 @@
+{
+        "id": "6c1142db-a1e9-4cfe-b9d4-fed9aec77635",
+        "name": "BIG-IP - HP laptop",
+        "values": [
+                {
+                        "key": "user",
+                        "value": "admin",
+                        "type": "default",
+                        "enabled": true
+                },
+                {
+                        "key": "host",
+                        "value": "192.168.0.150",
+                        "type": "default",
+                        "enabled": true
+                },
+                {
+                        "key": "myGitRepo",
+                        "value": "raw.githubusercontent.com/javajason/f5-as3/main",
+                        "type": "default",
+                        "enabled": true
+                },
+                {
+                        "key": "gitFileCreateNAT",
+                        "value": "Sample-Nat",
+                        "type": "default",
+                        "enabled": true
+                },
+                {
+                        "key": "AS3Tenant",
+                        "value": "",
+                        "type": "default",
+                        "enabled": true
+                },
+                {
+                        "key": "AS3Tenant64",
+                        "value": "",
+                        "type": "default",
+                        "enabled": true
+                }
+        ],
+        "_postman_variable_scope": "environment",
+        "_postman_exported_at": "2023-02-09T21:51:10.178Z",
+        "_postman_exported_using": "Postman/10.7.0"
+}
