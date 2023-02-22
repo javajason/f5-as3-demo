@@ -1,4 +1,89 @@
 {
+	"info": {
+		"_postman_id": "616f1314-83b9-4d47-afed-b1592bed261c",
+		"name": "AS3 Demo1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+
+		{
+			"name": "Sample-VS w/iRule",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"App1\": {\n            \"class\": \"Application\",\n            \"vservice1\": {\n                \"class\": \"Service_HTTP\",\n                \"virtualAddresses\": [\n                    \"192.168.1.200\"\n                ],\n                \"pool\": \"web_pool\",\n                \"nat64Enabled\": false,\n                \"iRules\": [\n                    { \"bigip\": \"/example_NAT/App1/iRule1\" }\n                ]\n            },\n            \"web_pool\": {\n                \"class\": \"Pool\",\n                \"monitors\": [\n                    \"http\"\n                ],\n                \"members\": [\n                    {\n                        \"servicePort\": 80,\n                        \"serverAddresses\": [\n                            \"192.168.0.18\"\n                        ]\n                    }\n                ]\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{pass}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{user}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "POST_Payload",
+			"value": ""
+		},
+		{
+			"key": "Sample-Nat-Request",
+			"value": ""
+		},
+		{
+			"key": "myResp",
+			"value": ""
+		}
+	]
+}
+
+{
     "class": "ADC",
     "schemaVersion": "3.14.0",
     "{{AS3Tenant}}": {
