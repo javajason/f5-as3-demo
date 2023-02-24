@@ -82,36 +82,3 @@
 		}
 	]
 }
-
-{
-    "class": "ADC",
-    "schemaVersion": "3.14.0",
-    "{{AS3Tenant}}": {
-        "class": "Tenant",
-        "App1": {
-            "class": "Application",
-            "vservice1": {
-                "class": "Service_HTTP",
-                "virtualAddresses": [
-                    "192.168.1.200"
-                ],
-                "pool": "web_pool",
-                "nat64Enabled": false
-            },
-            "web_pool": {
-                "class": "Pool",
-                "monitors": [
-                    "http"
-                ],
-                "members": [
-                    {
-                        "servicePort": 80,
-                        "serverAddresses": [
-                            "192.168.0.18"
-                        ]
-                    }
-                ]
-            }
-        }
-    }
-}
