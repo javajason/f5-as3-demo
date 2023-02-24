@@ -21,6 +21,12 @@
                         "enabled": true
                 },
                 {
+                        "key": "POST-URL",
+                        "value": "https://{{host}}/mgmt/shared/appsvcs/declare",
+                        "type": "default",
+                        "enabled": true
+                },                        
+                {
                         "key": "gitFileCreateNAT",
                         "value": "Sample-Nat",
                         "type": "default",
