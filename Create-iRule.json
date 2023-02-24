@@ -1,0 +1,16 @@
+{
+    "class": "ADC",
+    "schemaVersion": "3.14.0",
+    "{{AS3Tenant}}": {
+        "class": "Tenant",
+        "Application": {
+            "class": "Application", 
+            "iRule1": {
+                "class": "iRule",
+                "label": "iRule1",
+                "remark": "This is a test iRule",
+                "iRule": "when HTTP_REQUEST { log local0. \"Hello\" }"
+            }
+        }
+    }
+}
