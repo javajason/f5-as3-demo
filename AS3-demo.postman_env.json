@@ -21,6 +21,12 @@
                         "enabled": true
                 },
                 {
+                        "key": "GitRepo",
+                        "value": "https://raw.githubusercontent.com/javajason/f5-as3-demo/main/",
+                        "type": "default",
+                        "enabled": true
+                },
+                {
                         "key": "POST-URL",
                         "value": "https://{{host}}/mgmt/shared/appsvcs/declare",
                         "type": "default",
