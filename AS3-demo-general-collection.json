@@ -7,13 +7,13 @@
 	"item": [
 
 		{
-			"name": "Sample-VS w/iRule",
+			"name": "General-Collection",
 			"request": {
 				"method": "{{method}}",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "${{payload}}"
+					"raw": "{{payload}}"
 				},
 				"url": {
 					"raw": "{{URL}}",
