@@ -21,8 +21,9 @@
                                                         "  } else {",
                                                         "    pm.environment.set(\"payload\", response.text());",
                                                         "  }",
-                                                        "});"
-                                                ]
+                                                        "});",
+                                                        ""
+                                                ],
                                                 "type": "text/javascript"
                                         }
                                 },
