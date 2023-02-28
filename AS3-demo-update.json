@@ -13,9 +13,9 @@
                                         "script": {
                                                 "exec": [
                                                         "GitRepo = pm.environment.get(\"GitRepo\");",
-                                                        "Command = pm.environment.get(\"Command\");",
+                                                        "command = pm.environment.get(\"command\");",
                                                         "",
-                                                        "pm.sendRequest(GitRepo + Command, (error, response) => {",
+                                                        "pm.sendRequest(GitRepo + command, (error, response) => {",
                                                         "  if (error) {",
                                                         "    console.log(error);",
                                                         "  } else {",
