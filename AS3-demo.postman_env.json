@@ -31,6 +31,12 @@
                         "value": "https://{{host}}/mgmt/shared/appsvcs/declare",
                         "type": "default",
                         "enabled": true
+                },
+                {
+                        "key": "payload",
+                        "value": "foo",
+                        "type": "default",
+                        "enabled": true
                 },                        
                 {
                         "key": "gitFileCreateNAT",
