@@ -47,10 +47,6 @@
                                                 "{{host}}"
                                         ],
                                         "path": [
-																								"mgmt",
-																								"tm",
-																								"ltm",
-																								"virtual"
                                         ]
                                 }
                         },
