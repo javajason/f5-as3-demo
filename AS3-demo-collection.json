@@ -7,16 +7,22 @@
         "item": [
                 {
                         "name": "Update-Object",
-                        "event": [
-                                {
-                                        "listen": "test",
-                                        "script": {
-                                                "exec": [
-                                                        "console.log(pm.response.json());"
-                                                ],
-                                                "type": "text/javascript"
-                                        }
-                                }
+                        "exec": [
+                                "Command = \"Update-VS.json\";",
+                                "",
+                                "GitRepo = pm.environment.get(\"GitRepo\");",
+                                "",
+                                "pm.sendRequest(GitRepo + Command, (error, response) => {",
+                                "  if (error) {",
+                                "    console.log(error);",
+                                "  } else {",
+                                "    console.log(response);",
+                                "",
+                                "    pm.variables.set(\"payload\", response.text());",
+                                "    console.log(\"POST payload is: \" + pm.variables.get(\"payload\"));",
+                                "    payload.split('\"').join('\\\"');",
+                                "  }",
+                                "});"
                         ],
                         "request": {
                                 "method": "POST",
