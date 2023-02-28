@@ -1,0 +1,95 @@
+{
+        "info": {
+                "_postman_id": "94f508c5-eb8e-4556-9347-e8b11370da55",
+                "name": "AS3 Demo-GET",
+                "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+        },
+        "item": [
+                {
+                        "name": "Get-Object",
+                        "event": [
+                                {
+                                        "listen": "prerequest",
+                                        "script": {
+                                                "exec": [
+                                                        "GitRepo = pm.environment.get(\"GitRepo\");",
+                                                        "command = pm.environment.get(\"command\");",
+                                                        "",
+                                                        "pm.sendRequest(GitRepo + command, (error, response) => {",
+                                                        "  if (error) {",
+                                                        "    console.log(error);",
+                                                        "  } else {",
+                                                        "    pm.environment.set(\"get_url\", response.text());",
+                                                        "  }",
+                                                        "});",
+                                                        ""
+                                                ],
+                                                "type": "text/javascript"
+                                        }
+                                },
+                                {
+                                        "listen": "test",
+                                        "script": {
+                                                "exec": [
+                                                        "console.log(pm.response.json());"
+                                                ],
+                                                "type": "text/javascript"
+                                        }
+                                }
+                        ],
+                        "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                        "raw": "{{get_url}}",
+                                        "protocol": "https",
+                                        "host": [
+                                                "{{host}}"
+                                        ],
+                                        "path": [
+																								"mgmt",
+																								"tm",
+																								"ltm",
+																								"virtual"
+                                        ]
+                                }
+                        },
+                        "response": []
+                }
+        ],
+        "auth": {
+                "type": "basic",
+                "basic": [
+                        {
+                                "key": "password",
+                                "value": "{{pass}}",
+                                "type": "string"
+                        },
+                        {
+                                "key": "username",
+                                "value": "{{user}}",
+                                "type": "string"
+                        }
+                ]
+        },
+        "event": [
+                {
+                        "listen": "prerequest",
+                        "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                        ""
+                                ]
+                        }
+                },
+                {
+                        "listen": "test",
+                        "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                        ""
+                                ]
+                        }
+                }
+        ]
+}
