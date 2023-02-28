@@ -13,22 +13,15 @@
                                         "script": {
                                                 "exec": [
                                                         "GitRepo = pm.environment.get(\"GitRepo\");",
-                                                        "//GitRepo = \"https://raw.githubusercontent.com/javajason/f5-as3-demo/main/\";",
-                                                        "Command = \"Update-VS.json\";",
-                                                        "",
-                                                        "//console.log(\"Request to \" + GitRepo + Command);",
+                                                        "Command = pm.environment.get(\"Command\");",
                                                         "",
                                                         "pm.sendRequest(GitRepo + Command, (error, response) => {",
                                                         "  if (error) {",
                                                         "    console.log(error);",
                                                         "  } else {",
-                                                        "    //console.log(response);",
-                                                        "",
                                                         "    pm.environment.set(\"payload\", response.text());",
-                                                        "    //console.log(\"Payload is: \" + pm.variables.get(\"payload\"));",
                                                         "  }",
                                                         "});",
-                                                        ""
                                                 ],
                                                 "type": "text/javascript"
                                         }
