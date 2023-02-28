@@ -34,7 +34,7 @@
                 },
                 {
                         "key": "payload",
-                        "value": "foo",
+                        "value": "ffoo",
                         "type": "default",
                         "enabled": true
                 },                        
