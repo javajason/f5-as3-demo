@@ -6,7 +6,7 @@
         },
         "item": [
                 {
-                        "name": "Update-VS",
+                        "name": "Update-Object",
                         "event": [
                                 {
                                         "listen": "test",
@@ -23,8 +23,7 @@
                                 "header": [],
                                 "body": {
                                         "mode": "raw",
-                                        "raw": "{\n    \"class\": \"ADC\",\n    \"schemaVersion\": \"3.14.0\",\n    \"{{AS3Tenant}}\": {\n        \"class\": \"Tenant\",\n        \"App1\": {\n            \"class\": \"Application\",\n            \"vservice1\": {\n                \"class\": \"Service_HTTP\",\n                \"virtualAddresses\": [\n                    \"192.168.1.200\"\n                ],\n                \"pool\": \"web_pool\",\n                \"nat64Enabled\": false\n            },\n            \"web_pool\": {\n                \"class\": \"Pool\",\n                \"monitors\": [\n                    \"http\"\n                ],\n                \"members\": [\n                    {\n                        \"servicePort\": 80,\n                        \"serverAddresses\": [\n                            \"192.168.0.18\",\n                            \"192.168.0.201\"\n                        ]\n                    }\n                ]\n            }\n        }\n    }\n}"
-                                },
+                                        "raw": "{{payload}}",                                },
                                 "url": {
                                         "raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
                                         "protocol": "https",
