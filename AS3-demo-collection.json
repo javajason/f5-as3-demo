@@ -23,7 +23,8 @@
                                 "header": [],
                                 "body": {
                                         "mode": "raw",
-                                        "raw": "{{payload}}",                                },
+                                        "raw": "{{payload}}"
+                                },
                                 "url": {
                                         "raw": "https://{{host}}/mgmt/shared/appsvcs/declare",
                                         "protocol": "https",
