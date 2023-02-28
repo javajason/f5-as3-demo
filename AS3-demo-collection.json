@@ -19,8 +19,9 @@
                                 "    console.log(response);",
                                 "",
                                 "    pm.variables.set(\"payload\", response.text());",
-                                "    console.log(\"POST payload is: \" + pm.variables.get(\"payload\"));",
-                                "    payload.split('\"').join('\\\"');",
+                                "    console.log(\"payload is: \" + pm.variables.get(\"payload\"));",
+                                "    payload = payload.split('\"').join('\\\"');",
+                                "    console.log(\"Modified payload is: \" + pm.variables.get(\"payload\"));",
                                 "  }",
                                 "});"
                         ],
