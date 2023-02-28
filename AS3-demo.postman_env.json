@@ -40,13 +40,7 @@
                 },
                 {
                         "key": "AS3Tenant",
-                        "value": "",
-                        "type": "default",
-                        "enabled": true
-                },
-                {
-                        "key": "AS3Tenant64",
-                        "value": "",
+                        "value": "example_NAT",
                         "type": "default",
                         "enabled": true
                 }
