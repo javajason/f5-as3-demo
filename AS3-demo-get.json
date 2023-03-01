@@ -1,7 +1,7 @@
 {
         "info": {
                 "_postman_id": "94f508c5-eb8e-4556-9347-e8b11370da55",
-                "name": "AS3 Demo0-POST",
+                "name": "AS3 Demo-GET",
                 "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
         },
         "item": [
