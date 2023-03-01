@@ -34,7 +34,13 @@
                 },
                 {
                         "key": "payload",
-                        "value": "ffoo",
+                        "value": "foo",
+                        "type": "default",
+                        "enabled": true
+                },                        
+                {
+                        "key": "path",
+                        "value": "foo",
                         "type": "default",
                         "enabled": true
                 },                        
