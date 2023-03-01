@@ -1,12 +1,12 @@
 {
         "info": {
                 "_postman_id": "94f508c5-eb8e-4556-9347-e8b11370da55",
-                "name": "AS3 Demo-GET",
+                "name": "AS3 Demo0-POST",
                 "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
         },
         "item": [
                 {
-                        "name": "Get-Object",
+                        "name": "Update-Object",
                         "event": [
                                 {
                                         "listen": "prerequest",
@@ -19,9 +19,15 @@
                                                         "  if (error) {",
                                                         "    console.log(error);",
                                                         "  } else {",
-                                                        "    pm.environment.set(\"get_url\", response.text());",
+                                                        "    pm.environment.set(\"payload\", response.text());",
                                                         "  }",
                                                         "});",
+                                                        "// Example string to parse: https://{{host}}/mgmt/tm/ltm/virtual;",
+                                                        "//pm.environment.set(\"pathArray\", payload.substring((payload.indexOf(\"/\", (payload.indexOf(\"//:\") + 3) + 1)).split()));",
+                                                        "//path = pathArray.toString();",
+                                                        "//pm.environment.set(\"path\", pathArray.toString());",
+                                                        "///pm.environment.set(\"path\", 'mgmt\",\"tm\",\"ltm\",\"virtual');",
+                                                        "pm.environment.set(\"path\", 'mgmt/tm/ltm/virtual');",
                                                         ""
                                                 ],
                                                 "type": "text/javascript"
@@ -41,12 +47,13 @@
                                 "method": "GET",
                                 "header": [],
                                 "url": {
-                                        "raw": "{{get_url}}",
+                                        "raw": "{{payload}}",
                                         "protocol": "https",
                                         "host": [
                                                 "{{host}}"
                                         ],
                                         "path": [
+                                                "{{path}}"
                                         ]
                                 }
                         },
