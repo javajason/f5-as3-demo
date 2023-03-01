@@ -8,7 +8,7 @@
             "iRule1": {
                 "class": "iRule",
                 "label": "iRule1",
-                "remark": "This is a test iRule",
+                "remark": "This is also a test iRule",
                 "iRule": "when HTTP_REQUEST { log local0. \"Hello\" }"
             }
         }
