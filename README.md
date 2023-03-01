@@ -25,5 +25,7 @@ $ docker run -e pass=$pass -e request="Get-Pool-Members" as3_newman_get:latest
 Update:
 $ docker pull jepsteindocker/as3_newman_update
 $ docker run --env-file secrets.txt -e request="Update-VS.json" as3_newman:latest
-AND
+  OR
 $ docker run -e pass=$pass -e request="Update-VS.json" as3_newman:latest
+
+$ docker run -e pass=$pass -e request="Update-iRule.json" as3_newman_update:latest --verbose
