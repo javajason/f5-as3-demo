@@ -14,6 +14,7 @@
                                                 "exec": [
                                                         "if ( pm.environment.get(\"pass\").length == 0) {",
                                                         "  console.log(\"Illegal password (pass): length is 0\");",
+                                                        "  return;",
                                                         "}",
                                                         "GitRepo = pm.environment.get(\"GitRepo\");",
                                                         "command = pm.environment.get(\"command\");",
