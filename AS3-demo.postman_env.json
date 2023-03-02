@@ -15,38 +15,20 @@
                         "enabled": true
                 },
                 {
-                        "key": "myGitRepo",
-                        "value": "raw.githubusercontent.com/javajason/f5-as3/main",
-                        "type": "default",
-                        "enabled": true
-                },
-                {
                         "key": "GitRepo",
                         "value": "https://raw.githubusercontent.com/javajason/f5-as3-demo/main/",
                         "type": "default",
                         "enabled": true
                 },
                 {
-                        "key": "POST-URL",
-                        "value": "https://{{host}}/mgmt/shared/appsvcs/declare",
-                        "type": "default",
-                        "enabled": true
-                },
-                {
                         "key": "payload",
-                        "value": "foo",
+                        "value": "",
                         "type": "default",
                         "enabled": true
                 },                        
                 {
                         "key": "path",
-                        "value": "foo",
-                        "type": "default",
-                        "enabled": true
-                },                        
-                {
-                        "key": "gitFileCreateNAT",
-                        "value": "Sample-Nat",
+                        "value": "",
                         "type": "default",
                         "enabled": true
                 },
