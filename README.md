@@ -23,11 +23,11 @@ The Dockerfiles and usage examples are below:
 
   as3_newman_get:
     FROM postman/newman:ubuntu
-    ENTRYPOINT newman run https://raw.githubusercontent.com/javajason/f5-as3-demo/main/AS3-demo-get.json -k --environment https://raw.githubusercontent.com/javajason/f5-as3-demo/main/AS3-demo.postman_env.json --env-var "Command=$request" --env-var "pass=$pass"
+    ENTRYPOINT newman run https://raw.githubusercontent.com/javajason/f5-as3-demo/main/AS3-demo-get.json -k --environment https://raw.githubusercontent.com/javajason/f5-as3-demo/main/AS3-demo.postman_env.json --env-var "command=$request" --env-var "pass=$pass"
 
   as3_newman_update:
     FROM postman/newman:ubuntu
-    ENTRYPOINT newman run https://raw.githubusercontent.com/javajason/f5-as3-demo/main/AS3-demo-update.json -k --environment https://raw.githubusercontent.com/javajason/f5-as3-demo/main/AS3-demo.postman_env.json --env-var "Command=$request" --env-var "pass=$pass"
+    ENTRYPOINT newman run https://raw.githubusercontent.com/javajason/f5-as3-demo/main/AS3-demo-update.json -k --environment https://raw.githubusercontent.com/javajason/f5-as3-demo/main/AS3-demo.postman_env.json --env-var "command=$request" --env-var "pass=$pass"
 
 Get:
 $ docker pull jepsteindocker/as3_newman_get
