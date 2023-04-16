@@ -9,7 +9,8 @@
                 "class": "iRule",
                 "label": "iRule1",
                 "remark": "This is also a test iRule",
-                "iRule": "when HTTP_REQUEST { log local0. \"Hello from host, {{host}}.\" }"
+                "iRule": "when HTTP_REQUEST \{ HTTP::respond 200 content \"Welcome to my page, visitor from \[IP::client_addr\]\",
+                         "log local0. \"HTTP Request from \[IP::client_addr\]\"\}"
             }
         }
     }
