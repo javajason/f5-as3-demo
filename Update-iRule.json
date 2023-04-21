@@ -9,7 +9,7 @@
                 "class": "iRule",
                 "label": "iRule1",
                 "remark": "This is also a test iRule",
-                "iRule": {{example_iRule}}
+                "iRule": "{{example_iRule}}"
             }
         }
     }
