@@ -16,13 +16,13 @@ There are four types of files in this repo:
 4. The readme file
   README.md (this file)
 
-## Underlying Technology:
+## Underlying Dependencies:
 This repo makes use of Newman (https://learning.postman.com/docs/running-collections/using-newman-cli), the free CLI version of Postman, available both as a Linux binary and a container on Docker Hub (https://hub.docker.com/r/postman/newman).
 
 The jepsteindocker/as3_newman_get and jepsteindocker/as3_newman_update containers extend the Newman container by providing the default collection and environment (from this repo) to only require the user to provide two arguments: the password and the command to run.
 The Dockerfiles and usage examples are below:
 
-## Dockerfiles
+## Dockerfiles:
   as3_newman_get:
   
     FROM postman/newman:ubuntu
@@ -52,6 +52,7 @@ $ docker run -e pass=$pass -e request="Get-VS" -e "--verbose" as3_newman_get:lat
 $ docker run -e pass=$pass -e request="Get-Pools" as3_newman_get:latest
 
 $ docker run -e pass=$pass -e request="Get-Pool-Members" as3_newman_get:latest
+
 	(update AS3Tenant in environment file or update URL to specify tenant in Get-Pool-Members file)
 
 **Update:**
